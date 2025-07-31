@@ -1,0 +1,9 @@
+build/
+.gradle/
+.idea/
+/.gradle/
+/.gradle/8.8/
+/.gradle/buildOutputCleanup/
+/.gradle/vcs-1/
+/.gradle/file-system.probe
+/.idea/

@@ -1,0 +1,12 @@
+error:
+  permission: "&cYou don't have permission to execute this command."
+  only-player: "&cConsole cannot execute this command."
+  player-not-found: "&cThe player is offline."
+  player-left: "&cThe player left the server, track disabled."
+  not-track: "&cYou are not following any player."
+  unknown: "&cAn unknown error occurred."
+  not-connected: "&cThe player is still establishing a connection with the server."
+success:
+  tracked: "&aFrom now on you will follow the selected player, teleporting..."
+  server-change: "&aThe player changed his server/world, teleporting..."
+  disabled: "&aThe track was successfully disabled."
