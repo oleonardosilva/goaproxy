@@ -88,6 +88,10 @@ public class GoaCommand {
                 trackedCache.put(follower, targetName);
                 source.sendMessage(Utils.getMessage(config, "success", "tracked"));
 
+                final ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("TeleportTo");
+                out.writeUTF(targetName);
+
                 if (!serverConnection.getServerInfo().getName().equals(player.getCurrentServer().get().getServerInfo().getName())) {
                     player.createConnectionRequest(serverConnection.getServer()).connect().thenAccept(result -> {
                         if (!result.isSuccessful()) {
@@ -95,22 +99,12 @@ public class GoaCommand {
                             result.getReasonComponent().ifPresent(source::sendMessage);
                         }
 
-                        final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("TeleportTo");
-                        out.writeUTF(targetName);
-
                         if (!goaproxy.sendTeleportMessageToBackend(player, out.toByteArray())) {
                             source.sendMessage(Utils.getMessage(config, "error", "unknown"));
                         }
                     });
-                } else {
-                    final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                    out.writeUTF("TeleportTo");
-                    out.writeUTF(targetName);
-
-                    if (!goaproxy.sendTeleportMessageToBackend(player, out.toByteArray())) {
-                        source.sendMessage(Utils.getMessage(config, "error", "unknown"));
-                    }
+                } else if (!goaproxy.sendTeleportMessageToBackend(player, out.toByteArray())) {
+                    source.sendMessage(Utils.getMessage(config, "error", "unknown"));
                 }
             }, () -> source.sendMessage(Utils.getMessage(config, "error", "not-connected")));
 
