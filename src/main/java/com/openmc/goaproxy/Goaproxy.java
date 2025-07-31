@@ -64,16 +64,16 @@ public class Goaproxy {
         logger.info("Please, check if the goaproxy-spigot are in all servers!");
     }
 
-    @Subscribe
+    @Subscribe(async = false)
     public void onPlayerDisconnect(DisconnectEvent event) {
         final String username = event.getPlayer().getUsername();
         trackedCache.remove(username);
-        trackedCache.forEach((s, s2) -> {
-            if (s2.equalsIgnoreCase(username)) {
+        for (String s : trackedCache.keySet()) {
+            if (trackedCache.get(s).equalsIgnoreCase(username)) {
                 trackedCache.remove(s);
                 getServer().getPlayer(s).ifPresent(player -> player.sendMessage(Utils.getMessage(config, "error", "player-left")));
             }
-        });
+        }
     }
 
     public boolean sendTeleportMessageToBackend(Player player, byte[] data) {
