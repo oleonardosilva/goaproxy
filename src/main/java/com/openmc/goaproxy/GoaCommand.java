@@ -103,6 +103,14 @@ public class GoaCommand {
                             source.sendMessage(Utils.getMessage(config, "error", "unknown"));
                         }
                     });
+                } else {
+                    final ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("TeleportTo");
+                    out.writeUTF(targetName);
+
+                    if (!goaproxy.sendTeleportMessageToBackend(player, out.toByteArray())) {
+                        source.sendMessage(Utils.getMessage(config, "error", "unknown"));
+                    }
                 }
             }, () -> source.sendMessage(Utils.getMessage(config, "error", "not-connected")));
 
